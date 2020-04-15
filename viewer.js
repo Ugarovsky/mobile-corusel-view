@@ -248,7 +248,7 @@
     zoomed: null
   };
 
-  var TEMPLATE = '<div class="viewer-container" touch-action="none">' + '<div class="mobile-photo-scrolls"><div class="scroll-mobile-controller" data-viewer-action="prev" role="button"></div><div class="scroll-mobile-controller" data-viewer-action="next" role="button"></div></div>' +'<div class="viewer-canvas"></div>' + '<div class="viewer-footer">' + '<div class="viewer-title"></div>' + '<div class="viewer-toolbar"></div>' + '<div class="viewer-navbar">' + '<ul class="viewer-list"></ul>' + '</div>' + '</div>' + '<div class="viewer-tooltip"></div>' + '<div role="button" class="viewer-button" data-viewer-action="mix"></div>' + '<div class="viewer-player"></div>' + '</div>';
+  var TEMPLATE = '<div class="viewer-container" touch-action="none">'  +'<div class="viewer-canvas"></div>' + '<div class="viewer-footer">' + '<div class="viewer-title"></div>' + '<div class="viewer-toolbar"></div>' + '<div class="viewer-navbar">' + '<ul class="viewer-list"></ul>' + '</div>' + '</div>' + '<div class="viewer-tooltip"></div>' + '<div role="button" class="viewer-button" data-viewer-action="mix"></div>' + '<div class="viewer-player"></div>' + '</div>';
   
   var IS_BROWSER = typeof window !== 'undefined';
   var WINDOW = IS_BROWSER ? window : {};
@@ -2683,17 +2683,16 @@
             this.action = 'switched';
             var absoluteOffsetX = Math.abs(offsetX);
 
-            if (absoluteOffsetX > 1 && absoluteOffsetX > Math.abs(offsetY)) {
               // Empty `pointers` as `touchend` event will not be fired after swiped in iOS browsers.
               this.pointers = {};
 
-              if (offsetX > 1) {
+              if (offsetX > 0) {
                 this.prev(options.loop);
-              } else if (offsetX < -1) {
+              } else if (offsetX < 0) {
+                this.next(options.loop);
+              } else if (offsetX == 0) {
                 this.next(options.loop);
               }
-            }
-
             break;
           }
 
@@ -3041,3 +3040,6 @@
   return Viewer;
 
 }));
+
+
+///Uga
